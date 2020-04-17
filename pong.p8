@@ -35,7 +35,7 @@ function moveia()
 end	
 
 function _update()
-	 if lives > 0 then
+	 if lives > 0 and livesia >0 then
   	movepaddle()
   	moveball()
   	moveia()
@@ -60,11 +60,7 @@ function bounceball()
     ballxdir = -ballxdir
    -- sfx(0)
   end
-  
-  if bally < ballsize then
-    ballydir = -ballydir
-    --sfx(0)
-  end
+
 end
 
 function bouncepaddle()
@@ -76,7 +72,7 @@ function bouncepaddle()
 	 end
 	 if ballx >= padiax and ballx <= padiax+padiaw and bally > padiah+pady then
 		--sfx(0)
-		ballydir =-ballydir
+		 ballydir =-ballydir
 	end
 end
 
@@ -97,13 +93,16 @@ function loseball()
 		end
 		if bally < 0 then
 				if livesia > 0 then
-					 livesia -= 1
+					bally = 120
+					livesia -= 1
 				end
-				elseif livesia == 0 then
-					ballydir = 0
-					ballxdir = 0
-					bally = 64
-		end
+				else if lives == 0 then
+				  ballydir = 0
+				  ballxdir = 0
+				  bally = 64
+				 --sfx(5)
+				end					
+		end		
 end
 
 
@@ -114,7 +113,11 @@ function _draw()
 		for i = 1, lives do
 				spr(001,100,4)
 		end
+		for i = 1, livesia do
+				spr(001,26,4)
+		end
 		print(lives, 110,6,15)
+		print(livesia,20,6,15)
 	 rectfill(padx,pady,padx+padw,pady+padh,50)
 		rectfill(padiax,padiay,padiax+padiaw,padiay+padiah,120)
 		circfill(ballx, bally, ballsize, 15)
